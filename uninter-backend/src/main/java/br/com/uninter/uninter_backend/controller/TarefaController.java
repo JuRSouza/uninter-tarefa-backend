@@ -20,12 +20,18 @@ public class TarefaController {
         return repository.save(tarefa);
     }
 
+    @GetMapping
+    public ResponseEntity<Iterable<Tarefa>> listarTarefas() {
+        return ResponseEntity.ok(repository.findAll());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Tarefa> buscarTarefa(@PathVariable Long id) {
         Optional<Tarefa> tarefa = repository.findById(id);
         return tarefa.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Tarefa> atualizarTarefa(@PathVariable Long id, @RequestBody Tarefa tarefaAtualizada) {
